@@ -1,14 +1,28 @@
+import tkinter as tk
+from main import set_cps, button_clickk  # Assuming you still want to import this
 
-from appJar import gui
-from main import set_cps 
+# Create the main application window
+root = tk.Tk()
+root.geometry("400x200")
+root.title("Auto Clicker")
 
-app = gui() 
+cps_label = tk.Label(root, text="Enter CPS:")
+cps_label.grid(row=0, column=0, padx=0, pady=0, sticky="w")
+cps_entry = tk.Entry(root)
+cps_entry.grid(row=0, column=1, padx=0, pady=0)
 
-app.setSize("600x300")
-app.addLabel("cps_label", "Enter CPS:", row=0, column=0)
-app.addEntry("cps", row=0, column=1)
+hotkey_label = tk.Label(root, text="Enter Hot Key:")
+hotkey_label.grid(row=1, column=0, padx=0, pady=0, sticky="w")
+hotkey_entry = tk.Entry(root)
+hotkey_entry.grid(row=1, column=1, padx=0, pady=0)
 
-# Adding "Enter Hot Key:" label and entry in the second row, first column
-app.addLabel("hotkey_label", "Enter Hot Key:", row=1, column=0)
-app.addEntry("hotkey", row=1, column=1)
-app.go()
+disable_label = tk.Label(root, text = "Enter deactivation key (Can be same): ")
+disable_label.grid(row = 2, column = 0, padx=0, pady=0, sticky = "w")
+disable_entry = tk.Entry(root)
+disable_entry.grid(row=2, column=1, padx=0, pady=0)
+
+    
+button = tk.Button(root, text="Run", command=button_clickk)
+button.grid(row=3, column=0, padx=0, pady=0, sticky="w")
+
+root.mainloop()
