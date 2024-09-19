@@ -1,23 +1,16 @@
 import pyautogui as pg
 import numpy as pd 
 import time 
-import tkinter
-
-def set_cps(cps):
-    cps = int(input("Enter Clicks per second: "))
-    if cps > 99:
-        raise Exception("Below 100") 
-    if cps > 0:
-        return cps
+import tkinter as tk
+from interface import button_click
     
 
-def button_clickk():
-    print("")
+#def button_click():
 
-#def engage_key(option):
+#def find_key():
 
+#def remove_key():
 
-#def disengage_key(self):
+#def cps():
 
-
-#def quit(self):
+#def quit():
