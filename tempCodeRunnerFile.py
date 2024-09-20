@@ -1,1 +1,1 @@
-insert
+mouse_button = {1: "Left Click", 2: "Middle Click", 3: "Right Click"}
