@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 
 def handle_hotkey(event):
     mouse_button = {1: "Left Click", 2: "Middle Click", 3: "Right Click"}
@@ -23,13 +24,23 @@ def handle_disable_key(event):
         disable_entry.insert(0, mouse_button.get(event.num, "Unknown Mouse Button"))
         print(f"Mouse button clicked: {mouse_button.get(event.num, 'Unknown Mouse Button')}")
         
+def validate_input(new_value):
+    if len(new_value) > 1:
+        return False
+    return True
 
+def button_run():
+        cps = cps_entry.get()
+        hotkey = hotkey_entry.get()
+        stop = disable_entry.get()
+        return (cps,hotkey,stop)
 def ui():
     global cps_entry, hotkey_entry, disable_entry
+
     root = tk.Tk()
     root.geometry("350x150")
     root.title("Auto Clicker")
-
+    
     cps_label = tk.Label(root, text="Enter CPS:")
     cps_label.grid(row=0, column=0, padx=0, pady=0)
     cps_entry = tk.Entry(root)
@@ -69,8 +80,6 @@ def ui():
                 disable_entry.insert(0, mouse_button.get(event.num, "Unknown Mouse Button"))
                 print(f"Mouse button clicked: {mouse_button.get(event.num, 'Unknown Mouse Button')}")
 
-
-
     hotkey_widget = tk.Label(root, text="Click here Hotkey/Mouse Button: ", bg="lightgray", width=30)
     hotkey_widget.grid(row=1, column=0) 
     hotkey_widget.bind("<KeyPress>", handle_hotkey)
@@ -84,12 +93,6 @@ def ui():
     disable_widget.bind("<ButtonPress>", handle_disable_key)
     disable_widget.bind("<Enter>", lambda e: disable_widget.focus_set())  #set focus on hover dynamically
 
-    def button_run():
-        cps = cps_entry.get()
-        hotkey = hotkey_entry.get()
-        stop = disable_entry.get()
-
-        print(f"CPS: {cps}, Hotkey: {hotkey}, Stop: {stop}")
 
     br = tk.Button(root, text="Run", command=button_run)
     br.grid(row=3, column=0, padx=10, pady=10, sticky="w")
