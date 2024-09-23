@@ -3,11 +3,11 @@ import numpy as pd
 import time 
 import tkinter as tk
 import interface
-from interface import cps, hotkey, stop
-global running 
-running = False
 
+global running
+running = False
 def startup():
+    cps, hotkey, stop = interface.button_run()  
 
     hotkey = hotkey.lower()
     stop = stop.lower()
@@ -34,19 +34,34 @@ def startup():
         "f10": pg.F10,
         "f11": pg.F11,
         "f12": pg.F12,
-
             }
+    
     hotkey_obj = key_mapping.get(hotkey)
     stop_obj = key_mapping.get(stop)
-
-    if hotkey_obj is None or stop_obj is None:
-        print("error")
-        return
     
-    if hotkey.click():
-        pg.click(1/cps)
-        time.sleep(1/cps)
-    elif hotkey.click():
-        quit()
+    def auto_click():
+        nonlocal running
+        while running:
+            if pg.isPressed(stop):
+                running = False
+                break
+            if pg.isPressed(hotkey):
+                pg.click()
+                time.sleep(1/cps)
+    def start_auto_click():
+        global running
+        running = True
+        auto_click()    
+        
+    def stop_auto_click():
+        global running
+        running = False
+
+    interface.ui()
+
+
+
+
+startup()
 
     

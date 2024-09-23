@@ -1,1 +1,1 @@
-global cps_entry, hotkey_entry
+stop_obj
