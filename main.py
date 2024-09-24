@@ -1,9 +1,7 @@
 import pyautogui as pg
 import time
-import keyboard
+import threading
 import interface
-import threading  # Added threading to avoid blocking the Tkinter event loop
-
 global running  # Keep running as global
 
 def startup(cps, hotkey, stop):
@@ -12,11 +10,12 @@ def startup(cps, hotkey, stop):
     stop = stop.lower()
 
     def auto_click():
+        global running  # Declare running as global here to modify it
         while running:
-            if keyboard.is_pressed(stop):
+            if stop in pg.position():
                 running = False
                 break
-            if keyboard.is_pressed(hotkey):
+            if hotkey in pg.position():
                 pg.click()
                 time.sleep(1 / cps)
 
@@ -33,4 +32,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

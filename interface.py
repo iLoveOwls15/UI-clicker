@@ -1,5 +1,6 @@
 import tkinter as tk
 
+global running
 # Define the callback function to be set externally
 run_callback = None
 
@@ -45,12 +46,12 @@ def ui(callback):
     root.geometry("415x150")
     root.title("Auto Clicker")
     
-    cps_label = tk.Label(root, text="Enter CPS:")
-    cps_label.grid(row=0, column=0, padx=0, pady=0)
+    cps_label = tk.Label(root, text="Enter CPS:   ")
+    cps_label.grid(row=0, column=0, padx=0, pady=0,sticky="w")
     cps_entry = tk.Entry(root)
-    cps_entry.grid(row=0, column=1, padx=0, pady=0)
+    cps_entry.grid(row=0, column=1, padx=0, pady=0,sticky="w")
 
-    hotkey_label = tk.Label(root, text="Hotkey:")
+    hotkey_label = tk.Label(root, text="HotKey:       ")
     hotkey_label.grid(row=1, column=0, padx=0, pady=0, sticky="w")
     hotkey_entry = tk.Entry(root)
     hotkey_entry.grid(row=1, column=1, padx=0, pady=0, sticky="w")
@@ -81,5 +82,5 @@ def ui(callback):
 
     bq = tk.Button(root, text="Quit", command=button_quit)
     bq.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-    root.configure(bg="grey")
+    root.configure(bg="skyblue")
     root.mainloop()
