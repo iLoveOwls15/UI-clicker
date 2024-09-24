@@ -1,1 +1,2 @@
-stop_obj
+
+    stop = stop.lower()

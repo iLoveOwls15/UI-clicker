@@ -1,5 +1,8 @@
 import tkinter as tk
 
+# Define the callback function to be set externally
+run_callback = None
+
 def handle_hotkey(event):
     if event.type == tk.EventType.KeyPress:
         hotkey_entry.delete(0, tk.END)
@@ -24,14 +27,19 @@ def handle_disable_key(event):
         disable_entry.insert(0, mouse_button.get(event.num, "Unknown Mouse Button"))
         print(f"Mouse button clicked: {mouse_button.get(event.num, 'Unknown Mouse Button')}")
 
+# This function gets called when the "Run" button is pressed
 def button_run():
-    cps = cps_entry.get()
+    cps = int(cps_entry.get())
     hotkey = hotkey_entry.get()
     stop = disable_entry.get()
-    return (cps, hotkey, stop)
 
-def ui():
-    global cps_entry, hotkey_entry, disable_entry
+    if run_callback:  # Check if the callback is set
+        run_callback(cps, hotkey, stop)  # Pass the input to the callback
+
+def ui(callback):
+    global cps_entry, hotkey_entry, disable_entry, run_callback
+
+    run_callback = callback  # Set the callback function
 
     root = tk.Tk()
     root.geometry("415x150")
@@ -73,7 +81,5 @@ def ui():
 
     bq = tk.Button(root, text="Quit", command=button_quit)
     bq.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-
+    root.configure(bg="grey")
     root.mainloop()
-
-ui()

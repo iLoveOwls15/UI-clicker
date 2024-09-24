@@ -1,67 +1,36 @@
 import pyautogui as pg
-import numpy as pd 
-import time 
-import tkinter as tk
+import time
+import keyboard
 import interface
+import threading  # Added threading to avoid blocking the Tkinter event loop
 
-global running
-running = False
-def startup():
-    cps, hotkey, stop = interface.button_run()  
+global running  # Keep running as global
 
+def startup(cps, hotkey, stop):
+    global running  # Declare running as global here to modify it
     hotkey = hotkey.lower()
     stop = stop.lower()
 
-    key_mapping = {
-        "left": pg.leftClick,
-        "right": pg.rightClick,
-        "middle": pg.middleClick,
-        "up": pg.mouseUp,
-        "down": pg.mouseDown,
-        "home": pg.HOME,
-        "end": pg.END,
-        "insert": pg.INSERT,
-        "delete": pg.DELETE,
-        "f1": pg.F1,
-        "f2": pg.F2,
-        "f3": pg.F3,
-        "f4": pg.F4,
-        "f5": pg.F5,
-        "f6": pg.F6,
-        "f7": pg.F7,
-        "f8": pg.F8,
-        "f9": pg.F9,
-        "f10": pg.F10,
-        "f11": pg.F11,
-        "f12": pg.F12,
-            }
-    
-    hotkey_obj = key_mapping.get(hotkey)
-    stop_obj = key_mapping.get(stop)
-    
     def auto_click():
-        nonlocal running
         while running:
-            if pg.isPressed(stop):
+            if keyboard.is_pressed(stop):
                 running = False
                 break
-            if pg.isPressed(hotkey):
+            if keyboard.is_pressed(hotkey):
                 pg.click()
-                time.sleep(1/cps)
+                time.sleep(1 / cps)
+
     def start_auto_click():
         global running
         running = True
-        auto_click()    
-        
-    def stop_auto_click():
-        global running
-        running = False
+        threading.Thread(target=auto_click).start()  # Run auto_click in a separate thread
 
-    interface.ui()
+    start_auto_click()
 
+def main():
+    # Pass the `startup` function as a callback to the UI
+    interface.ui(startup)
 
+if __name__ == "__main__":
+    main()
 
-
-startup()
-
-    
